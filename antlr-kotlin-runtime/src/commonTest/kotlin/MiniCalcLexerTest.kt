@@ -9,11 +9,17 @@ class TestingLexer : BaseTest() {
 
     @test
     fun firstTokenDebug1() {
+        println("1")
         val input = ANTLRInputStream("1 + 2")
+        println("2")
         val lexer = MiniCalcLexer(input)
+        println("3")
         val interpreter = lexer.interpreter
+        println("4")
         val result = interpreter!!.match(input, 0)
+        println("5")
         assertEquals(11, result)
+        println("6")
     }
 
     @test

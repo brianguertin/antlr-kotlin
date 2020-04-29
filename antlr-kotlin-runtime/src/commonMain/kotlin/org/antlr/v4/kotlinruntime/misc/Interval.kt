@@ -125,10 +125,12 @@ class Interval(var a: Int, var b: Int) {
             if (a != b || a < 0 || a > INTERVAL_POOL_MAX_VALUE) {
                 return Interval(a, b)
             }
-            if (cache[a] == null) {
+            /*if (cache[a] == null) {
                 cache[a] = Interval(a, a)
             }
-            return cache[a]!!
+            return cache[a]!!*/
+            // TODO: Support cache on Kotlin/Native
+            return Interval(a, a)
         }
     }
 }

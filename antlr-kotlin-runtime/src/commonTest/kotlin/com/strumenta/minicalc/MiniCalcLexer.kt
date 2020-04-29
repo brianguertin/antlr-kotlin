@@ -19,12 +19,18 @@ class MiniCalcLexer(val input: CharStream) : Lexer(input) {
     override val grammarFileName: String
         get() = "MiniCalcLexer.g4"
 
+    val ATN = ATNDeserializer().deserializeIntegers(serializedIntegersATN)
+
+    val decisionToDFA: Array<DFA> = Array<DFA>(ATN.numberOfDecisions, {
+        DFA(ATN.getDecisionState(it)!!, it)
+    })
+
+    val sharedContextCache = PredictionContextCache()
+
     override val atn: ATN
-        get() = MiniCalcLexer.Companion.ATN
+        get() = ATN
 
     companion object {
-        val decisionToDFA: Array<DFA>
-        val sharedContextCache = PredictionContextCache()
 
         private val LITERAL_NAMES = listOf(null, null, null, "'input'",
                 "'var'", "'print'",
@@ -234,15 +240,6 @@ class MiniCalcLexer(val input: CharStream) : Lexer(input) {
                         7, 4, 2, 9, 23, 2, 9, 4, 2, 9, 8, 2, 9, 9, 2, 9, 10, 2, 9, 11, 2, 9,
                         13, 2, 9, 14, 2, 9, 15, 2, 9, 16, 2, 9, 17, 2, 9, 18, 2, 9, 19, 2, 9,
                         20, 2, 9, 21, 2, 9, 12, 2, 9, 22, 2)
-        val ATN = ATNDeserializer().deserializeIntegers(serializedIntegersATN)
-
-        init {
-            decisionToDFA = Array<DFA>(ATN.numberOfDecisions, {
-                DFA(ATN.getDecisionState(it)!!, it)
-            })
-
-
-        }
     }
 
     enum class Tokens(val id: Int) {

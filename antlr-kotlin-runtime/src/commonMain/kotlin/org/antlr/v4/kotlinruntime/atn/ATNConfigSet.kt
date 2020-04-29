@@ -8,6 +8,7 @@ package org.antlr.v4.kotlinruntime.atn
 
 import com.strumenta.kotlinmultiplatform.BitSet
 import com.strumenta.kotlinmultiplatform.Math
+import com.strumenta.kotlinmultiplatform.noFreeze
 import org.antlr.v4.kotlinruntime.misc.AbstractEqualityComparator
 import org.antlr.v4.kotlinruntime.misc.Array2DHashSet
 import org.antlr.v4.kotlinruntime.misc.DoubleKeyMap
@@ -23,6 +24,10 @@ open class ATNConfigSet constructor(
          * it's a wildcard whereas it is not for LL context merge.
          */
         val fullCtx: Boolean = true) : Set<ATNConfig> {
+
+    init {
+        noFreeze()
+    }
 
     /** Indicates that the set of configurations is read-only. Do not
      * allow any code to manipulate the set; DFA states will point at

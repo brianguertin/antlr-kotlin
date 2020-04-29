@@ -30,6 +30,13 @@ object solver : TypeDeclarator {
 class MiniCalcParser(input: TokenStream) : Parser(input) {
     // TODO verify version of runtime is compatible
 
+    val ATN = ATNDeserializer().deserializeIntegers(serializedIntegersATN)
+    protected val decisionToDFA: Array<DFA> = Array<DFA>(ATN.numberOfDecisions, {
+        DFA(ATN.getDecisionState(it)!!, it)
+    })
+
+    protected val sharedContextCache = PredictionContextCache()
+
     override val grammarFileName: String
         get() = "MiniCalcParser.g4"
 
@@ -38,7 +45,7 @@ class MiniCalcParser(input: TokenStream) : Parser(input) {
     override val ruleNames: Array<String>?
         get() = MiniCalcParser.Companion.ruleNames
     override val atn: ATN
-        get() = MiniCalcParser.Companion.ATN
+        get() = ATN
 
     enum class Tokens(val id: Int) {
         EOF(-1),
@@ -87,8 +94,6 @@ class MiniCalcParser(input: TokenStream) : Parser(input) {
     }
 
     companion object {
-        protected val decisionToDFA: Array<DFA>
-        protected val sharedContextCache = PredictionContextCache()
 
         val ruleNames = arrayOf("miniCalcFile", "line", "statement", "print",
                 "inputDeclaration", "varDeclaration", "assignment",
@@ -188,15 +193,6 @@ class MiniCalcParser(input: TokenStream) : Parser(input) {
                         3, 2, 2, 2, 93, 97, 7, 9, 2, 2, 94, 97, 7, 10, 2, 2, 95, 97, 7,
                         11, 2, 2, 96, 93, 3, 2, 2, 2, 96, 94, 3, 2, 2, 2, 96, 95, 3, 2,
                         2, 2, 97, 21, 3, 2, 2, 2, 10, 25, 34, 64, 70, 81, 83, 91, 96)
-        val ATN = ATNDeserializer().deserializeIntegers(serializedIntegersATN)
-
-        init {
-            decisionToDFA = Array<DFA>(ATN.numberOfDecisions, {
-                DFA(ATN.getDecisionState(it)!!, it)
-            })
-
-
-        }
     }
 
     private val NEWLINE = Tokens.NEWLINE.id

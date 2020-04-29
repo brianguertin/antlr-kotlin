@@ -38,7 +38,7 @@ abstract class PredictionContext protected constructor(
          */
         val cachedHashCode: Int
 ) {
-    val id = globalNodeCount++
+    //val id = globalNodeCount++
 
     /** This means only the [.EMPTY] (wildcard? not sure) context is in set.  */
     open val isEmpty: Boolean
@@ -151,7 +151,7 @@ abstract class PredictionContext protected constructor(
 
         private val INITIAL_HASH = 1
 
-        var globalNodeCount = 0
+        //var globalNodeCount = 0
 
         /** Convert a [RuleContext] tree to a [PredictionContext] graph.
          * Return [.EMPTY] if `outerContext` is empty or null.
@@ -556,7 +556,7 @@ abstract class PredictionContext protected constructor(
             }
         }
 
-        fun toDOTString(context: PredictionContext?): String {
+        /*fun toDOTString(context: PredictionContext?): String {
             if (context == null) return ""
             val buf = StringBuilder()
             buf.append("digraph G {\n")
@@ -608,7 +608,7 @@ abstract class PredictionContext protected constructor(
 
             buf.append("}\n")
             return buf.toString()
-        }
+        }*/
 
         // From Sam
         fun getCachedContext(

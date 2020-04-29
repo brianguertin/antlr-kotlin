@@ -86,11 +86,8 @@ abstract class ATNSimulator(val atn: ATN,
 
         /** Must distinguish between missing edge and edge we know leads nowhere  */
 
-        val ERROR: DFAState
-
-        init {
-            ERROR = DFAState(ATNConfigSet())
-            ERROR.stateNumber = Int.MAX_VALUE
+        val ERROR: DFAState get() = DFAState(ATNConfigSet()).apply {
+            stateNumber = Int.MAX_VALUE
         }
 
 

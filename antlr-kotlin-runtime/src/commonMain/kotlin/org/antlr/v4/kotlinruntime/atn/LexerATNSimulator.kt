@@ -7,6 +7,7 @@
 package org.antlr.v4.kotlinruntime.atn
 
 import com.strumenta.kotlinmultiplatform.assert
+import com.strumenta.kotlinmultiplatform.noFreeze
 import com.strumenta.kotlinmultiplatform.outMessage
 import com.strumenta.kotlinmultiplatform.synchronized
 import org.antlr.v4.kotlinruntime.*
@@ -18,6 +19,10 @@ import org.antlr.v4.kotlinruntime.misc.Interval
 class LexerATNSimulator(protected val recog: Lexer?, atn: ATN,
                         val decisionToDFA: Array<DFA?>,
                         sharedContextCache: PredictionContextCache) : ATNSimulator(atn, sharedContextCache) {
+
+    init {
+        noFreeze()
+    }
 
     /** The current token's starting index into the character stream.
      * Shared across DFA to ATN simulation in case the ATN fails and the
@@ -79,19 +84,25 @@ class LexerATNSimulator(protected val recog: Lexer?, atn: ATN,
     }
 
     fun match(input: CharStream, mode: Int): Int {
-        match_calls++
+        //match_calls++
+        print("a")
         this.mode = mode
         val mark = input.mark()
+        print("b")
         try {
             this.startIndex = input.index()
             this.prevAccept.reset()
             val dfa = decisionToDFA[mode]
+            print("c")
             return if (dfa!!.s0 == null) {
+                print("d")
                 matchATN(input)
             } else {
+                print("e")
                 execATN(input, dfa!!.s0 as DFAState)
             }
         } finally {
+            print("f")
             input.release(mark)
         }
     }
@@ -691,6 +702,6 @@ class LexerATNSimulator(protected val recog: Lexer?, atn: ATN,
         val MIN_DFA_EDGE = 0
         val MAX_DFA_EDGE = 127 // forces unicode to stay in ATN
 
-        var match_calls = 0
+        //var match_calls = 0
     }
 }
