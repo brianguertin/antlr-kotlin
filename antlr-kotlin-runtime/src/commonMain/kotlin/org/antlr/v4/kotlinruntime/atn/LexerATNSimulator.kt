@@ -8,6 +8,7 @@ package org.antlr.v4.kotlinruntime.atn
 
 import com.strumenta.kotlinmultiplatform.assert
 import com.strumenta.kotlinmultiplatform.outMessage
+import com.strumenta.kotlinmultiplatform.synchronized
 import org.antlr.v4.kotlinruntime.*
 import org.antlr.v4.kotlinruntime.dfa.DFA
 import org.antlr.v4.kotlinruntime.dfa.DFAState
